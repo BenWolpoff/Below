@@ -65,15 +65,17 @@ public class BasicAI : MonoBehaviour {
 
         //When pointB is reached, pointA is targeted, and vice versa
         //Enemy should turn around as well.
-        if (this.gameObject.transform.position == pointA.transform.position)
+        if (this.gameObject.transform.position.x <= pointA.transform.position.x)
         {
             target = pointB.transform;
+
         }
-        if (this.gameObject.transform.position == pointB.transform.position)
+        if (this.gameObject.transform.position.x >= pointB.transform.position.x)
         {
             target = pointA.transform;
+  
         }
-
+        
         if (Input.GetKey(KeyCode.P))
         {
             status = "active";
@@ -83,10 +85,14 @@ public class BasicAI : MonoBehaviour {
         //A "vision" raycast which will let the enemy see the player
         //If the player is seen, state will change to Active
 
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+        Vector3 fwd = transform.TransformDirection(Vector3.right);
 
-        if (Physics.Raycast(transform.position, fwd, 10))
-            print("I see something!");
+        if (Physics.Raycast(transform.position, fwd, 10000))
+        {
+            Debug.Log("I see something!");
+            
+        }
+        Debug.DrawRay(transform.position, fwd, Color.green);
 
 	}
 
