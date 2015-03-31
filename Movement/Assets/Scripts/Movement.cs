@@ -95,16 +95,16 @@ public class Movement : MonoBehaviour {
                 faceLeft = true;
             }
 
-           
-
-            this.gameObject.rigidbody2D.AddForce(Vector3.left * moveSpeed);
+            //this.gameObject.rigidbody2D.AddForce(Vector3.left * moveSpeed);
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
         }
 
         //Press D to go Right
         if (Input.GetKey("d"))
         {
-            this.gameObject.rigidbody2D.AddForce(Vector3.right * moveSpeed);
+            //this.gameObject.rigidbody2D.AddForce(Vector3.right * moveSpeed);
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
             //If the player is facing left, turn around
             if (faceLeft == true)

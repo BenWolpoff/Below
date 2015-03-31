@@ -6,12 +6,15 @@ public class BasicAI : MonoBehaviour {
     //Empty gameobjects will be used to set these locations, setting themselves as target
     public GameObject pointA;
     public GameObject pointB;
-
     public GameObject player;
 
     public Transform target;
 
+    public GameObject eyes;
 
+    //Booleans for directional facing
+    public bool faceRight = true;
+    public bool faceLeft = false;
 
     //Variables to determine how quickly the enemy moves
     public float speed = 1;
@@ -42,11 +45,54 @@ public class BasicAI : MonoBehaviour {
 
                 //Idle behavior here, pacing from one spot to another
                 float step = speed * Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+                transform.position = Vector2.MoveTowards(transform.position, target.position, step);
+
+                //When pointB is reached, pointA is targeted, and vice versa
+                //Enemy should turn around as well.
+                if (this.gameObject.transform.position.x <= pointA.transform.position.x + 1)
+                {
+                    target = pointB.transform;
+                    
+
+                }
+                if (this.gameObject.transform.position.x >= pointB.transform.position.x - 1)
+                {
+                    target = pointA.transform;
+                    
+                }
+
+                //Always be facing the target
+                if (target.transform.position.x < transform.position.x && faceRight == true)
+                {
+                    this.transform.Rotate(0, 180, 0);
+                    faceLeft = !faceLeft;
+                    faceRight = !faceRight;
+                }
+
+                if (target.transform.position.x > transform.position.x && faceRight == false)
+                {
+                    this.transform.Rotate(0, 180, 0);
+                    faceLeft = !faceLeft;
+                    faceRight = !faceRight;
+                }
 
                 break;
 
             case "active":
+                //Always be facing the player
+                if (player.transform.position.x < transform.position.x && faceRight == true)
+                {
+                    this.transform.Rotate(0, 180, 0);
+                    faceLeft = !faceLeft;
+                    faceRight = !faceRight;
+                }
+
+                if (player.transform.position.x > transform.position.x && faceRight == false)
+                {
+                    this.transform.Rotate(0, 180, 0);
+                    faceLeft = !faceLeft;
+                    faceRight = !faceRight;
+                }
 
                 //Active behavior here, moves toward plDfayer very quickly
 
@@ -63,18 +109,7 @@ public class BasicAI : MonoBehaviour {
 
         }
 
-        //When pointB is reached, pointA is targeted, and vice versa
-        //Enemy should turn around as well.
-        if (this.gameObject.transform.position.x <= pointA.transform.position.x)
-        {
-            target = pointB.transform;
-
-        }
-        if (this.gameObject.transform.position.x >= pointB.transform.position.x)
-        {
-            target = pointA.transform;
-  
-        }
+       
         
         if (Input.GetKey(KeyCode.P))
         {
@@ -85,14 +120,28 @@ public class BasicAI : MonoBehaviour {
         //A "vision" raycast which will let the enemy see the player
         //If the player is seen, state will change to Active
 
-        Vector3 fwd = transform.TransformDirection(Vector3.right);
+        RaycastHit2D hit = Physics2D.Raycast(eyes.transform.position, transform.forward, 4.7f);
 
-        if (Physics.Raycast(transform.position, fwd, 10000))
+        if (hit)
         {
-            Debug.Log("I see something!");
-            
+            if (hit.collider.gameObject.tag == "Player")
+            {
+                //Debug.Log("See You!");
+                status = "active";
+            }
+
+
+
         }
-        Debug.DrawRay(transform.position, fwd, Color.green);
+
+        
+
+        Debug.DrawRay(eyes.transform.position, transform.forward, Color.red);
+
+       
+
+        
+        
 
 	}
 
