@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour {
     public bool faceRight = true;
     public bool faceLeft = false;
 
+    public bool grounded = false;
+
     
     //A variable to detirmine how quickly the player moves
     public float moveSpeed = 5f;
@@ -63,7 +65,7 @@ public class Movement : MonoBehaviour {
         
         //When running, the player moves faster and jumps higher
 
-        runJump = normalJump * 1.5f;
+        runJump = normalJump * 1.2f;
 
         runSpeed = normalSpeed * 1.75f;
 
@@ -73,30 +75,51 @@ public class Movement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        v = rigidbody2D.velocity.x;
+        //This may be redundant with the new movement controls:
+      //  v = rigidbody2D.velocity.x;
 
         //Slow down player if they exceed maximum speed
-        if (rigidbody2D.velocity.x > maxSpeed);
-        {
+     //   if (rigidbody2D.velocity.x > maxSpeed);
+       // {
             //Changing this variable will alter how smoothly the slowdown occurs (.5-.999)
-            rigidbody2D.velocity *= 0.9f;
-        }
+       //     rigidbody2D.velocity *= 0.9f;
+       // }
 
 
+
+        //Check to see if player is on the ground
+        
+
+
+
+       
         //Press A to go Left
         if (Input.GetKey("a"))
         {
+            //this.gameObject.rigidbody2D.AddForce(Vector3.left * moveSpeed);
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+
+            //Play Walk or Run animation depending on running boolean
+            if (running == true)
+            {
+                animation.Play("run");
+            }
+            else
+            {
+                animation.Play("walk");
+            }
+
             //If the player is facing right, turn around
             if (faceRight == true)
             {
+                
                 this.transform.Rotate(0, 180, 0);
 
                 faceRight = false;
                 faceLeft = true;
             }
 
-            //this.gameObject.rigidbody2D.AddForce(Vector3.left * moveSpeed);
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+           
 
         }
 
@@ -105,6 +128,17 @@ public class Movement : MonoBehaviour {
         {
             //this.gameObject.rigidbody2D.AddForce(Vector3.right * moveSpeed);
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+
+            //Play Walk or Run animation depending on running boolean
+            if (running == true)
+            {
+                animation.Play("run");
+            }
+            else
+            {
+                animation.Play("walk");
+            }
+            
 
             //If the player is facing left, turn around
             if (faceLeft == true)
@@ -115,6 +149,12 @@ public class Movement : MonoBehaviour {
                 faceLeft = false;
             }
 
+        }
+
+        //Stop walking animation when the player stops walking or jumping
+        if (Input.GetKeyUp("d") || Input.GetKeyUp("a"))
+        {
+            animation.Play("idle");
         }
 
         
@@ -180,7 +220,8 @@ public class Movement : MonoBehaviour {
         //Press Space while on the Ground to Jump
         if (col.gameObject.tag == "Ground" && Input.GetKey("space"))
         {
-            this.gameObject.rigidbody2D.AddForce(Vector3.up * jumpForce);
+            this.gameObject.rigidbody2D.AddForce(transform.up * jumpForce);
+            
         }
     }
 }

@@ -3,11 +3,13 @@ using System.Collections;
 
 public class FlashLight : MonoBehaviour {
 
-    public bool on = true;
+    public bool on = false;
 
 
 	// Use this for initialization
 	void Start () {
+
+        on = false;
 	
 	}
 	

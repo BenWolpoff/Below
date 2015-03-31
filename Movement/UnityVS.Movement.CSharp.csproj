@@ -68,6 +68,8 @@
     <Compile Include="Assets\Scripts\Hazard.cs" />
     <Compile Include="Assets\Scripts\LightBulb.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
+    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\ScreenChanger.cs" />
     <Compile Include="Assets\Scripts\WinObject.cs" />
     <None Include="Assets\license.txt" />

@@ -15,7 +15,7 @@ public class WinObject : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player" && col.gameObject.GetComponent<PlayerInventory>().canLeave == true)
         {
             Debug.Log("YOU WIN");
             Application.LoadLevel(0);
