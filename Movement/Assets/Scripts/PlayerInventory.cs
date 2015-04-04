@@ -26,6 +26,8 @@ public class PlayerInventory : MonoBehaviour {
         if (col.gameObject.tag == "Item")
         {
             canLeave = true;
+
+            Debug.Log("You got " + col.gameObject.name);
             Destroy(col.gameObject);
         }
     }

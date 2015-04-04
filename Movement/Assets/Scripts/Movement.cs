@@ -12,6 +12,9 @@ public class Movement : MonoBehaviour {
 
     public bool grounded = false;
 
+    public bool canMove = true; // A bool that can stop the player from moving
+    public string level; //A string set by the level manager, so that the correct level is reloaded on death
+
     
     //A variable to detirmine how quickly the player moves
     public float moveSpeed = 5f;
@@ -47,6 +50,13 @@ public class Movement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        canMove = true;
+
+        //Start the player facing right
+        this.transform.Rotate(0, 90, 0);
+
+
+
         //Set normal and crouch heights and speeds
         Vector3 scale = transform.localScale;
 
@@ -75,26 +85,44 @@ public class Movement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //This may be redundant with the new movement controls:
-      //  v = rigidbody2D.velocity.x;
-
-        //Slow down player if they exceed maximum speed
-     //   if (rigidbody2D.velocity.x > maxSpeed);
-       // {
-            //Changing this variable will alter how smoothly the slowdown occurs (.5-.999)
-       //     rigidbody2D.velocity *= 0.9f;
-       // }
-
-
 
         //Check to see if player is on the ground
+        RaycastHit2D down = Physics2D.Raycast(transform.position, -transform.up, .7f);
+
+        if (down)
+        {
+            if (down.collider.gameObject.tag == "Ground")
+            {
+                grounded = true;
+            }
+
+            else
+            {
+                grounded = false;
+            }
+
+        }
+
+        else
+        {
+            grounded = false;
+        }
+
+        Debug.DrawRay(transform.position, -transform.up, Color.green);
+
+        //Press Space while on the Ground to Jump
+        if (grounded == true && Input.GetKeyDown("space"))
+        {
+            this.gameObject.rigidbody2D.AddForce(transform.up * jumpForce);
+
+        }
         
 
 
 
        
         //Press A to go Left
-        if (Input.GetKey("a"))
+        if (Input.GetKey("a") && canMove == true)
         {
             //this.gameObject.rigidbody2D.AddForce(Vector3.left * moveSpeed);
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
@@ -124,7 +152,7 @@ public class Movement : MonoBehaviour {
         }
 
         //Press D to go Right
-        if (Input.GetKey("d"))
+        if (Input.GetKey("d") && canMove == true)
         {
             //this.gameObject.rigidbody2D.AddForce(Vector3.right * moveSpeed);
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
@@ -163,7 +191,7 @@ public class Movement : MonoBehaviour {
 
         //Press S to Crouch, reducing height.
 
-        if (Input.GetKeyDown("s"))
+        if (Input.GetKeyDown("s") && canMove == true)
         {
             Vector3 size = transform.localScale;
             size.y = crouchHeight;
@@ -214,14 +242,45 @@ public class Movement : MonoBehaviour {
 	
 	}
 
-    //Jump should only be available while Player is on the ground
-    void OnCollisionStay2D(Collision2D col)
+    //When they player dies, they should first run a death animation and then load the current level
+    public void Dying()
     {
-        //Press Space while on the Ground to Jump
-        if (col.gameObject.tag == "Ground" && Input.GetKey("space"))
+        canMove = false;
+        Debug.Log("Should Be Dead");
+        animation.Play("death");
+        Invoke("Death", .5f);
+    }
+
+    void Death() //Loads a level based on a variable set by the level manager
+    {
+        switch (level)
         {
-            this.gameObject.rigidbody2D.AddForce(transform.up * jumpForce);
-            
+            case "Level1":
+
+                
+            Application.LoadLevel(0);
+
+                break;
+
+            case "Level2":
+
+               
+            Application.LoadLevel(1);
+
+            break;
+
+            case "Level3" :
+
+               
+            Application.LoadLevel(2);
+
+            break;
+
+
+
+
         }
     }
+
+   
 }

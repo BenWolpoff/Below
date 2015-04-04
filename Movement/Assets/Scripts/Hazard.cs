@@ -18,8 +18,7 @@ public class Hazard : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            Debug.Log("YOU DED");
-            Application.LoadLevel(0);
+            col.gameObject.GetComponent<Movement>().Dying();
         }
     }
 }

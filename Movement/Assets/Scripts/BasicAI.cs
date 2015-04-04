@@ -34,10 +34,6 @@ public class BasicAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
-
-       
-
         //The enemy will do different things when the status variable changes
         switch (status)
         {
@@ -53,7 +49,6 @@ public class BasicAI : MonoBehaviour {
                 {
                     target = pointB.transform;
                     
-
                 }
                 if (this.gameObject.transform.position.x >= pointB.transform.position.x - 1)
                 {
@@ -110,11 +105,13 @@ public class BasicAI : MonoBehaviour {
         }
 
        
-        
-        if (Input.GetKey(KeyCode.P))
-        {
-            status = "active";
-        }
+        //An auto-trigger for debugging, will cause all monsters with this AI to become active with the 
+        //P button
+
+       // if (Input.GetKey(KeyCode.P))
+       // {
+       //     status = "active";
+       // }
 
 
         //A "vision" raycast which will let the enemy see the player
@@ -133,8 +130,6 @@ public class BasicAI : MonoBehaviour {
 
 
         }
-
-        
 
         Debug.DrawRay(eyes.transform.position, transform.forward, Color.red);
 
