@@ -12,6 +12,14 @@ public class BasicAI : MonoBehaviour {
 
     public GameObject eyes;
 
+
+    public int lightStun;
+
+    //instantiate audio stuff
+    AudioSource audioSource;
+    public AudioClip warCry;
+    public AudioClip screech;
+
     //Booleans for directional facing
     public bool faceRight = true;
     public bool faceLeft = false;
@@ -42,6 +50,9 @@ public class BasicAI : MonoBehaviour {
                 //Idle behavior here, pacing from one spot to another
                 float step = speed * Time.deltaTime;
                 transform.position = Vector2.MoveTowards(transform.position, target.position, step);
+
+                //Play Walk animation
+                animation.Play("Walk");
 
                 //When pointB is reached, pointA is targeted, and vice versa
                 //Enemy should turn around as well.
@@ -98,20 +109,23 @@ public class BasicAI : MonoBehaviour {
 
             case "light":
 
-                //NOT ALL ENEMIES WILL HAVE THIS- special behavior when the flashlight shines on them
+                //Special behavior when the flashlight shines on them
+
+                //lightStun counts down, and when it is finished, the enemy returns to normal.
+                //If light constantly shines on the enemy, the lightStun int is constantly set to 25
+                lightStun--;
+
+                if (lightStun <= 0)
+                {
+                    BecomeIdle();
+                }
 
                 break;
 
         }
 
        
-        //An auto-trigger for debugging, will cause all monsters with this AI to become active with the 
-        //P button
-
-       // if (Input.GetKey(KeyCode.P))
-       // {
-       //     status = "active";
-       // }
+       
 
 
         //A "vision" raycast which will let the enemy see the player
@@ -124,7 +138,7 @@ public class BasicAI : MonoBehaviour {
             if (hit.collider.gameObject.tag == "Player")
             {
                 //Debug.Log("See You!");
-                status = "active";
+                BecomeActive();
             }
 
 
@@ -139,6 +153,36 @@ public class BasicAI : MonoBehaviour {
         
 
 	}
+
+   public void BecomeActive()
+    {
+       
+
+       
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+        audioSource.clip = warCry;
+
+        audioSource.PlayOneShot(warCry);
+
+        status = "active";
+    }
+
+    public void BecomeIdle()
+    {
+        status = "idle";
+    }
+
+    public void LightShine()
+    {
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+        audioSource.clip = warCry;
+
+        audioSource.PlayOneShot(screech);
+
+        status = "light";
+        animation.Play("Attack");
+        lightStun = 25;
+    }
 
    
 }

@@ -29,7 +29,7 @@ public class FlashLight : MonoBehaviour {
             //When triggered, it sets an enemy's AI to "light"
             if (light.collider.gameObject.tag == "Enemy")
             {
-                light.collider.gameObject.GetComponent<BasicAI>().status = "light";
+                light.collider.gameObject.GetComponent<BasicAI>().LightShine();
             }
 
         }

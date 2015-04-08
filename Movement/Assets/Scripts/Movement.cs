@@ -52,8 +52,8 @@ public class Movement : MonoBehaviour {
 
         canMove = true;
 
-        //Start the player facing right
-        this.transform.Rotate(0, 90, 0);
+        //Start the player facing right (If Necessary)
+        //this.transform.Rotate(0, 90, 0);
 
 
 
@@ -246,7 +246,7 @@ public class Movement : MonoBehaviour {
     public void Dying()
     {
         canMove = false;
-        Debug.Log("Should Be Dead");
+        
         animation.Play("death");
         Invoke("Death", .5f);
     }

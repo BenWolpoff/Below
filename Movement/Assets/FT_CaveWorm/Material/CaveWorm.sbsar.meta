@@ -3,10 +3,10 @@ guid: 72dfe8b6245e9e248894ac8809582773
 SubstanceImporter:
   serializedVersion: 5
   materialInstances:
-  - serializedVersion: 10
+  - serializedVersion: 12
     name: CaveWorm
     prototypeName: CaveWorm
-    shaderName: Bumped Specular
+    shader: {fileID: 4, guid: 0000000000000000f000000000000000, type: 0}
     inputs:
     - name: BaseColor
       value:
@@ -52,7 +52,7 @@ SubstanceImporter:
         texture: {instanceID: 0}
     - name: Rust
       value:
-        scalar[0]: .230000004
+        scalar[0]: .688000023
         scalar[1]: 0
         scalar[2]: 0
         scalar[3]: 0
@@ -145,6 +145,7 @@ SubstanceImporter:
       serializedVersion: 5
       offset: {x: 0, y: 0}
       scale: {x: 1, y: 1}
+      generateMipmaps: 1
       generateAllOutputs: 0
       animationUpdateRate: 42
     materialProperties:
@@ -189,6 +190,15 @@ SubstanceImporter:
       filterMode: 1
       aniso: 1
       wrapMode: 0
+    textureAssignments:
+    - shaderProp:
+        name: _MainTex
+      material: {instanceID: 0}
+      baseUID: 3701651327
+    - shaderProp:
+        name: _BumpMap
+      material: {instanceID: 0}
+      baseUID: 3701651325
     buildTargetSettings:
     - serializedVersion: 2
       buildTarget: 
