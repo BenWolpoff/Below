@@ -17,8 +17,6 @@ public class StatueMonsterAI : MonoBehaviour
 	public float rust;
 
     
-
-
     public int countdown = 1000;
 
     //instantiate audio stuff
@@ -130,9 +128,12 @@ public class StatueMonsterAI : MonoBehaviour
 
     public void LightShine()
     {
-        //countdown--;
-		rust = rend.material.GetFloat ("Rust");
+        countdown--;
+		//rust = rend.material.GetFloat ("Rust");
        // rend.Rust = 0;
+
+       // ProceduralMaterial mat = new ProceduralMaterial();
+        //float rustVal = mat.GetProceduralFloat("Rust");
     }
 
 

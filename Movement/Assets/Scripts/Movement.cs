@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Movement : MonoBehaviour {
 
+    AudioSource audioSource;
+    public AudioClip walking;
+    public AudioClip die;
+
     public bool running = false;
 
     public bool crouching = false;
@@ -119,13 +123,29 @@ public class Movement : MonoBehaviour {
         
 
 
+        //Play sounds when keys are pressed
 
+        if (Input.GetKeyDown("a") || Input.GetKeyDown("d"))
+        {
+            if (grounded == true)
+            {
+                audioSource = this.gameObject.AddComponent<AudioSource>();
+                audioSource.clip = walking;
+
+                audioSource.Play();
+
+            }
+        }
        
+
+
         //Press A to go Left
         if (Input.GetKey("a") && canMove == true)
         {
-            //this.gameObject.rigidbody2D.AddForce(Vector3.left * moveSpeed);
+           //Move Player and make walking sound (if on ground)
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+
+           
 
             //Play Walk or Run animation depending on running boolean
             if (running == true)
@@ -246,7 +266,13 @@ public class Movement : MonoBehaviour {
     public void Dying()
     {
         canMove = false;
-        
+
+
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+        audioSource.clip = die;
+
+        audioSource.PlayOneShot(die);
+
         animation.Play("death");
         Invoke("Death", .5f);
     }

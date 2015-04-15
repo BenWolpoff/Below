@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\ScreenChanger.cs" />
     <Compile Include="Assets\Scripts\StatueMonsterAI.cs" />
+    <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\WinObject.cs" />
     <None Include="Assets\license.txt" />
     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />

@@ -5,6 +5,9 @@ public class FlashLight : MonoBehaviour {
 
     public bool on = false;
 
+    AudioSource audioSource;
+    public AudioClip click;
+
 
 	// Use this for initialization
 	void Start () {
@@ -42,6 +45,11 @@ public class FlashLight : MonoBehaviour {
         // F toggles flashlight on and off
        if (Input.GetKeyDown("f"))
        {
+           audioSource = this.gameObject.AddComponent<AudioSource>();
+           audioSource.clip = click;
+
+           audioSource.PlayOneShot(click);
+           
            on = !on;
        }
 
