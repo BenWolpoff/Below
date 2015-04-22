@@ -16,8 +16,14 @@ public class StatueMonsterAI : MonoBehaviour
 
 	public float rust;
 
+   //Shaking variables
+    Vector2 originalPos;
+    public float shakeAmount = 0.01f;
     
-    public int countdown = 1000;
+
+    
+    public int countdown = 400;
+
 
     //instantiate audio stuff
     AudioSource audioSource;
@@ -40,6 +46,8 @@ public class StatueMonsterAI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        originalPos = this.transform.position;
+
         countdown = countdown;
 
         rend = body.GetComponent<Renderer>();
@@ -75,6 +83,10 @@ public class StatueMonsterAI : MonoBehaviour
                 break;
 
             case "active":
+
+                //Play walk animation
+                animation.Play("Walk");
+
                 //Always be facing the player
                 if (player.transform.position.x < transform.position.x && faceRight == true)
                 {
@@ -128,12 +140,27 @@ public class StatueMonsterAI : MonoBehaviour
 
     public void LightShine()
     {
+        if (shakeAmount < .1)
+            shakeAmount = shakeAmount + .0008f;
+
+
+
         countdown--;
+
+
+
+        if (countdown > 1)
+        {
+
+            this.transform.localPosition = originalPos + Random.insideUnitCircle * shakeAmount;
+        }
+
+       
 		//rust = rend.material.GetFloat ("Rust");
-       // rend.Rust = 0;
+        //rend.Rust = 0;
 
        // ProceduralMaterial mat = new ProceduralMaterial();
-        //float rustVal = mat.GetProceduralFloat("Rust");
+        // float rustVal = mat.GetProceduralFloat("Rust");
     }
 
 
