@@ -27,7 +27,7 @@ public class PlayerInventory : MonoBehaviour {
         {
             canLeave = true;
 
-            Debug.Log("You got " + col.gameObject.name);
+            gameObject.GetComponent<GUIscript>().Say("I found a " + col.gameObject.name);
             Destroy(col.gameObject);
         }
     }

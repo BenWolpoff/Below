@@ -7,12 +7,21 @@ public class Movement : MonoBehaviour {
     public AudioClip walking;
     public AudioClip die;
 
+    //bools for running, crouching, and directional facing states
     public bool running = false;
 
     public bool crouching = false;
 
     public bool faceRight = true;
     public bool faceLeft = false;
+
+    //Variables for turning commands.
+    public bool canLeft = false;
+    public bool canRight = false;
+    public int countdownLeft = 0;
+    public int countdownRight = 0;
+    public int countdownDefault = 100;
+
 
     public bool grounded = false;
 
@@ -89,6 +98,29 @@ public class Movement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        //Always countdown the Left and Right variables.
+        //When they hit zero, the turn enablers turn off.
+        //Releasing directional keys temporarily reset the countdon, enabling turning.
+
+        if (countdownLeft > 0)
+        {
+            countdownLeft--;
+            canLeft = true;
+        }
+        else
+        {
+            canLeft = false;
+        }
+
+        if (countdownRight > 0)
+        {
+            countdownRight--;
+            canRight = true;
+        }
+        else
+        {
+            canRight = false;
+        }
 
         //Check to see if player is on the ground
         RaycastHit2D down = Physics2D.Raycast(transform.position, -transform.up, .7f);
@@ -142,9 +174,12 @@ public class Movement : MonoBehaviour {
         //Press A to go Left
         if (Input.GetKey("a") && canMove == true)
         {
-           //Move Player and make walking sound (if on ground)
+           //Move Player forward or backward, depending on facing
+            if(faceLeft == true)
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
+            if(faceLeft == false)
+            transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
            
 
             //Play Walk or Run animation depending on running boolean
@@ -157,14 +192,16 @@ public class Movement : MonoBehaviour {
                 animation.Play("walk");
             }
 
-            //If the player is facing right, turn around
+            //If the player is facing right, turn around- ADD CONITIONAL so that turning won't happen unless key is pressed twice, or running
             if (faceRight == true)
             {
+                if (running == true || canLeft == true){
                 
                 this.transform.Rotate(0, 180, 0);
 
                 faceRight = false;
                 faceLeft = true;
+                }
             }
 
            
@@ -175,7 +212,11 @@ public class Movement : MonoBehaviour {
         if (Input.GetKey("d") && canMove == true)
         {
             //this.gameObject.rigidbody2D.AddForce(Vector3.right * moveSpeed);
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            if (faceRight == true)
+                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+
+            if (faceRight == false)
+                transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
 
             //Play Walk or Run animation depending on running boolean
             if (running == true)
@@ -191,10 +232,14 @@ public class Movement : MonoBehaviour {
             //If the player is facing left, turn around
             if (faceLeft == true)
             {
-                this.transform.Rotate(0, 180, 0);
+                if (running == true || canRight == true)
+                {
 
-                faceRight = true; 
-                faceLeft = false;
+                    this.transform.Rotate(0, 180, 0);
+
+                    faceRight = true;
+                    faceLeft = false;
+                }
             }
 
         }
@@ -205,6 +250,11 @@ public class Movement : MonoBehaviour {
             animation.Play("idle");
         }
 
+        //Reset countdowns when player releases directional keys.
+        if (Input.GetKeyUp("d"))
+            countdownRight = countdownDefault;
+        if (Input.GetKeyUp("a"))
+            countdownLeft = countdownDefault;
         
 
        

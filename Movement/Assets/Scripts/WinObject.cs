@@ -3,8 +3,11 @@ using System.Collections;
 
 public class WinObject : MonoBehaviour {
 
+   
     public string level; //A string set by the level manager, so that the correct level is loaded when the player wins
 
+    //The message given to the player if they try to open the door before it is unlocked
+    public string ReasonCantLeave = "The Door is Stuck!";
     //instantiate audio stuff
     AudioSource audioSource;
     public AudioClip locked;
@@ -70,7 +73,7 @@ public class WinObject : MonoBehaviour {
                 audioSource.clip = locked;
 
                 audioSource.PlayOneShot(locked);
-                Debug.Log("The door is stuck!");
+                col.gameObject.GetComponent<GUIscript>().Say(ReasonCantLeave);
             }
         }
 
