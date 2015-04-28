@@ -41,27 +41,25 @@ public class WinObject : MonoBehaviour {
                 {
                     case "Level1":
 
-
-                        Application.LoadLevel(1);
+                        Application.LoadLevel(2);
 
                         break;
 
                     case "Level2":
 
-
-                        Application.LoadLevel(0);
+                        Application.LoadLevel(3);
 
                         break;
 
                     case "Level3":
 
-
-                        Application.LoadLevel(0);
+                        Application.LoadLevel(4);
 
                         break;
 
-
-
+                    case "Level4":
+                        Application.LoadLevel(0);
+                        break;
 
                 }
                 

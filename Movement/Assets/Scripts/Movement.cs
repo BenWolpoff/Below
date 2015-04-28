@@ -3,12 +3,16 @@ using System.Collections;
 
 public class Movement : MonoBehaviour {
 
+    //Audio variables, clips, and a boolean for tracking whether footsteps are sounding.
     AudioSource audioSource;
     public AudioClip walking;
     public AudioClip die;
+    public bool stepSounds;
 
     //bools for running, crouching, and directional facing states
     public bool running = false;
+
+    
 
     public bool crouching = false;
 
@@ -157,14 +161,18 @@ public class Movement : MonoBehaviour {
 
         //Play sounds when keys are pressed
 
-        if (Input.GetKeyDown("a") || Input.GetKeyDown("d"))
+        if (Input.GetKey("a") || Input.GetKey("d") )
         {
-            if (grounded == true)
+            if (grounded == true && stepSounds == false)
             {
+                stepSounds = true;
                 audioSource = this.gameObject.AddComponent<AudioSource>();
                 audioSource.clip = walking;
+                audioSource.loop = true;
 
                 audioSource.Play();
+
+                
 
             }
         }
@@ -175,22 +183,38 @@ public class Movement : MonoBehaviour {
         if (Input.GetKey("a") && canMove == true)
         {
            //Move Player forward or backward, depending on facing
-            if(faceLeft == true)
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-
-            if(faceLeft == false)
-            transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
-           
-
-            //Play Walk or Run animation depending on running boolean
-            if (running == true)
+            if (faceLeft == true)
             {
-                animation.Play("run");
+
+                //Play Walk or Run animation forward depending on running boolean
+                if (running == true)
+                {
+                    animation["run"].speed = 1.0f;
+                    animation.Play("run");
+                }
+                else
+                {
+                    animation["walk"].speed = 1.0f;
+                    animation.Play("walk");
+                }
+
+                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
-            else
+
+            if (faceLeft == false)
             {
-                animation.Play("walk");
+                //Play Walk or Run animation in reverse depending on running boolean
+               if(running == false)
+                {
+                   //Doesn't quite work yet, causes animation to freeze
+                    //animation["walk"].speed = -1.0f;
+                    animation.Play("walk");
+                }
+
+                transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
+
+          
 
             //If the player is facing right, turn around- ADD CONITIONAL so that turning won't happen unless key is pressed twice, or running
             if (faceRight == true)
@@ -213,20 +237,34 @@ public class Movement : MonoBehaviour {
         {
             //this.gameObject.rigidbody2D.AddForce(Vector3.right * moveSpeed);
             if (faceRight == true)
+            {
+                //Play Walk or Run animation forward depending on running boolean
+                if (running == true)
+                {
+                    animation["run"].speed = 1.0f;
+                    animation.Play("run");
+                }
+                else
+                {
+                    animation["walk"].speed = 1.0f;
+                    animation.Play("walk");
+                }
+
                 transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            }
 
             if (faceRight == false)
-                transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+            {
 
-            //Play Walk or Run animation depending on running boolean
-            if (running == true)
-            {
-                animation.Play("run");
+                //Play Walk animation in reverse depending on running boolean
+                if(running == false)
+                {
+                    animation.Play("walk");
+                }
+
+                transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             }
-            else
-            {
-                animation.Play("walk");
-            }
+            
             
 
             //If the player is facing left, turn around
@@ -248,6 +286,8 @@ public class Movement : MonoBehaviour {
         if (Input.GetKeyUp("d") || Input.GetKeyUp("a"))
         {
             animation.Play("idle");
+            stepSounds = false;
+            audioSource.loop = false;
         }
 
         //Reset countdowns when player releases directional keys.
@@ -334,21 +374,28 @@ public class Movement : MonoBehaviour {
             case "Level1":
 
                 
-            Application.LoadLevel(0);
+            Application.LoadLevel(1);
 
                 break;
 
             case "Level2":
 
                
-            Application.LoadLevel(1);
+            Application.LoadLevel(2);
 
             break;
 
             case "Level3" :
 
                
-            Application.LoadLevel(2);
+            Application.LoadLevel(3);
+
+            break;
+
+            case "Level4":
+
+
+            Application.LoadLevel(4);
 
             break;
 

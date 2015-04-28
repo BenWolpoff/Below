@@ -8,6 +8,8 @@ public class BasicAI : MonoBehaviour {
     public GameObject pointB;
     public GameObject player;
 
+    public bool canMakeNoise = true;
+
     public Transform target;
 
     public GameObject eyes;
@@ -52,7 +54,7 @@ public class BasicAI : MonoBehaviour {
                 transform.position = Vector2.MoveTowards(transform.position, target.position, step);
 
                 //Play Walk animation
-                animation.Play("Walk");
+                animation.Play("walk");
 
                 //When pointB is reached, pointA is targeted, and vice versa
                 //Enemy should turn around as well.
@@ -104,7 +106,7 @@ public class BasicAI : MonoBehaviour {
 
                 float dash = chaseSpeed * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, dash);
-
+                animation.Play("run");
                 break;
 
             case "light":
@@ -118,6 +120,7 @@ public class BasicAI : MonoBehaviour {
                 if (lightStun <= 0)
                 {
                     BecomeIdle();
+                    canMakeNoise = true;
                 }
 
                 break;
@@ -135,7 +138,7 @@ public class BasicAI : MonoBehaviour {
 
         if (hit)
         {
-            if (hit.collider.gameObject.tag == "Player")
+            if (hit.collider.gameObject.tag == "Player" && status != "active")
             {
                 //Debug.Log("See You!");
                 BecomeActive();
@@ -157,13 +160,11 @@ public class BasicAI : MonoBehaviour {
    public void BecomeActive()
     {
        
+            audioSource = this.gameObject.AddComponent<AudioSource>();
+            audioSource.clip = warCry;
 
-       
-        audioSource = this.gameObject.AddComponent<AudioSource>();
-        audioSource.clip = warCry;
-
-        audioSource.PlayOneShot(warCry);
-
+            audioSource.PlayOneShot(warCry);
+        
         status = "active";
     }
 
@@ -174,13 +175,16 @@ public class BasicAI : MonoBehaviour {
 
     public void LightShine()
     {
-        audioSource = this.gameObject.AddComponent<AudioSource>();
-        audioSource.clip = warCry;
+        if (canMakeNoise == true)
+        {
+            audioSource = this.gameObject.AddComponent<AudioSource>();
+            audioSource.clip = warCry;
 
-        audioSource.PlayOneShot(screech);
-
+            audioSource.PlayOneShot(screech);
+            canMakeNoise = false;
+        }
         status = "light";
-        animation.Play("Attack");
+        animation.Play("damage");
         lightStun = 25;
     }
 
