@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour {
 
     private float volume = 1.0f;
 
+    public float additionWidth;
+
 
 	// Use this for initialization
 	void Start () {
@@ -43,7 +45,7 @@ public class UIManager : MonoBehaviour {
 
         if(Logo != null)
         {
-            GUI.DrawTexture(new Rect((Screen.width / 2) -100, 30, 200, 200), Logo);
+            GUI.DrawTexture(new Rect((Screen.width / 2) + additionWidth, 30, 200, 200), Logo);
         }
 
         GUI.skin = MyGUISkin;
