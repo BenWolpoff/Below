@@ -131,21 +131,19 @@ public class Movement : MonoBehaviour {
 
         if (down)
         {
-            if (down.collider.gameObject.tag == "Ground")
+            if (down.collider.collider2D.gameObject.tag == "Ground")
             {
                 grounded = true;
             }
-
             else
             {
                 grounded = false;
             }
 
         }
-
         else
         {
-            grounded = false;
+            //grounded = false;
         }
 
         Debug.DrawRay(transform.position, -transform.up, Color.green);
@@ -287,7 +285,14 @@ public class Movement : MonoBehaviour {
         {
             animation.Play("idle");
             stepSounds = false;
-            audioSource.loop = false;
+            
+            if (audioSource != null)
+            {
+                audioSource.loop = false;
+                Destroy(audioSource);
+            }
+            
+      
         }
 
         //Reset countdowns when player releases directional keys.
@@ -371,31 +376,36 @@ public class Movement : MonoBehaviour {
     {
         switch (level)
         {
+            case "Intro":
+                Application.LoadLevel(1);
+
+                break;
+
             case "Level1":
 
                 
-            Application.LoadLevel(1);
+            Application.LoadLevel(2);
 
                 break;
 
             case "Level2":
 
                
-            Application.LoadLevel(2);
+            Application.LoadLevel(3);
 
             break;
 
             case "Level3" :
 
                
-            Application.LoadLevel(3);
+            Application.LoadLevel(4);
 
             break;
 
             case "Level4":
 
 
-            Application.LoadLevel(4);
+            Application.LoadLevel(5);
 
             break;
 

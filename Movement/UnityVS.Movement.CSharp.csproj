@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\FlashLight.cs" />
     <Compile Include="Assets\Scripts\GUIscript.cs" />
     <Compile Include="Assets\Scripts\Hazard.cs" />
+    <Compile Include="Assets\Scripts\LevelManagers\Intro.cs" />
     <Compile Include="Assets\Scripts\LevelManagers\LevelFour.cs" />
     <Compile Include="Assets\Scripts\LevelManagers\LevelOne.cs" />
     <Compile Include="Assets\Scripts\LevelManagers\LevelThree.cs" />

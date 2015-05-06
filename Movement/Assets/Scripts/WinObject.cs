@@ -39,21 +39,27 @@ public class WinObject : MonoBehaviour {
 
                 switch (level)//Level variable is set by the level manager
                 {
-                    case "Level1":
+                    case "Intro":
 
                         Application.LoadLevel(2);
 
                         break;
 
-                    case "Level2":
+                    case "Level1":
 
                         Application.LoadLevel(3);
 
                         break;
 
-                    case "Level3":
+                    case "Level2":
 
                         Application.LoadLevel(4);
+
+                        break;
+
+                    case "Level3":
+
+                        Application.LoadLevel(5);
 
                         break;
 
