@@ -64,7 +64,7 @@ public class WinObject : MonoBehaviour {
                         break;
 
                     case "Level4":
-                        Application.LoadLevel(0);
+                        Application.LoadLevel(6);
                         break;
 
                 }
@@ -77,6 +77,7 @@ public class WinObject : MonoBehaviour {
                 audioSource.clip = locked;
 
                 audioSource.PlayOneShot(locked);
+                if (col != null)
                 col.gameObject.GetComponent<GUIscript>().Say(ReasonCantLeave);
             }
         }

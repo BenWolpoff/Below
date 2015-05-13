@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour {
 
         if(Logo != null)
         {
-            GUI.DrawTexture(new Rect((Screen.width / 2) + additionWidth, 30, 200, 200), Logo);
+            GUI.DrawTexture(new Rect((Screen.width / 2) + additionWidth, 30, 300, 200), Logo);
         }
 
         GUI.skin = MyGUISkin;
