@@ -3,8 +3,10 @@ using System.Collections;
 
 public class IntroPickup : MonoBehaviour {
 
+    //The flashlight that is attached to the player
     public GameObject flashlight;
 
+    //The flashlight the player sees on the table
     public GameObject fakeFlashlight;
 
 	// Use this for initialization
@@ -19,8 +21,9 @@ public class IntroPickup : MonoBehaviour {
 	
 	}
 
-    void OnTriggerStay2D(Collider2D col)//If the player presses W at the door, they will attempt to open it. If they can, then the next level is loaded.
+    void OnTriggerStay2D(Collider2D col)
     {
+        //When the player presses W over the flashlight, it should disappear off the table and appear on the player character
         if (Input.GetKeyDown("w"))
         {
             fakeFlashlight.SetActive(false);

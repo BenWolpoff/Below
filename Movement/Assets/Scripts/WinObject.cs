@@ -71,13 +71,13 @@ public class WinObject : MonoBehaviour {
                 
             }
 
-            else
+            else if (col.gameObject.tag == "Player" && col.gameObject.GetComponent<PlayerInventory>().canLeave == false)
             {
                 audioSource = this.gameObject.AddComponent<AudioSource>();
                 audioSource.clip = locked;
 
                 audioSource.PlayOneShot(locked);
-                if (col != null)
+                
                 col.gameObject.GetComponent<GUIscript>().Say(ReasonCantLeave);
             }
         }

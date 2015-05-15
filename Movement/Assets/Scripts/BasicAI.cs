@@ -8,13 +8,16 @@ public class BasicAI : MonoBehaviour {
     public GameObject pointB;
     public GameObject player;
 
+    //A bool for disabiling noise
     public bool canMakeNoise = true;
 
+    //the space that the monster will travel to
     public Transform target;
 
+    //A place for the sight raycast to start, making it a gameobject makes it easily adjustable
     public GameObject eyes;
 
-
+    //An integer to keep track of how long the monster will remain disabled by bright light
     public int lightStun;
 
     //instantiate audio stuff
@@ -156,7 +159,7 @@ public class BasicAI : MonoBehaviour {
         
 
 	}
-
+    //A function that changes status to active, makes an angry sound
    public void BecomeActive()
     {
        
@@ -168,11 +171,12 @@ public class BasicAI : MonoBehaviour {
         status = "active";
     }
 
+    //A function that changes the satus to idle
     public void BecomeIdle()
     {
         status = "idle";
     }
-
+    //A function called when the light hits the monster
     public void LightShine()
     {
         if (canMakeNoise == true)

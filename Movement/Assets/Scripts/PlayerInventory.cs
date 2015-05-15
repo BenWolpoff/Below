@@ -22,7 +22,7 @@ public class PlayerInventory : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        //Press Space while on the Ground to Jump
+        //Pick up objects tagged "item" and tell the player what they found
         if (col.gameObject.tag == "Item")
         {
             canLeave = true;

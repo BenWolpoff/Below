@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameEndUI : MonoBehaviour
 {
-
+    //Instantiate UI stuff
     public GUISkin MyGUISkin;
     public Texture2D Background, Logo;
 
@@ -28,11 +28,6 @@ public class GameEndUI : MonoBehaviour
 
         menuState = main;
 
-        for (int x = 0; x < CreditsTextLines.Length; x++)
-        {
-            textToDisplay += CreditsTextLines[x] + " \n";
-        }
-        textToDisplay += "Press Esc To Go Back";
 
     }
 
@@ -62,6 +57,8 @@ public class GameEndUI : MonoBehaviour
 
     private void menuFunc(int id)
     {
+        //Player should have the option to return to main menu or quit game
+
         if (GUILayout.Button("Return to Menu"))
         {
             Application.LoadLevel(0);
